@@ -4,9 +4,8 @@ library(shiny)
 ui <- fluidPage(
   
   # Application title
-  titlePanel("Shiny App for K-means Clustering"),
+  titlePanel("Shiny App for K-means Clustering with two selected variables"),
   
-  # Sidebar with different widgets depending on the selected tab
   sidebarLayout(
     sidebarPanel(
       selectInput('xcol', 'X Variable', names(iris)),
