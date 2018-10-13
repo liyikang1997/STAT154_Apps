@@ -4,7 +4,7 @@ library(shiny)
 ui <- fluidPage(
   
   # Application title
-  titlePanel("Shiny App for K-means clustering process"),
+  titlePanel("Shiny App for visualizing K-means clustering process"),
   
   sidebarLayout(
     sidebarPanel(
