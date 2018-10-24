@@ -42,6 +42,7 @@ server <- function(input, output) {
     })
     
     cluster_steps <- list(assignment)
+    centers <- list(centroids)
     step_num <- 2
     repeat {
       prev <- assignment
@@ -57,17 +58,23 @@ server <- function(input, output) {
         break
       }
       cluster_steps[[step_num]] <- assignment
+      centers[[step_num]] <- centroids
       step_num <- step_num + 1
     }
     return(list(cluster_sizes=as.vector(table(assignment)),
                 cluster_means=centroids, 
                 clustering_vector=assignment,
-                cluster_steps = cluster_steps))
+                cluster_steps = cluster_steps,
+                centers = centers))
   })
   
   
   output$plot<- renderPlot({
-  plot(selectedData()[,input$xcol], selectedData()[,input$ycol], col = my_kmeans()$cluster_steps[[input$step]], pch= 19)
+  plot(selectedData()[,input$xcol], selectedData()[,input$ycol], 
+       col = my_kmeans()$cluster_steps[[input$step]], pch= 19)
+  points(my_kmeans()$centers[[input$step]][, input$xcol],
+         my_kmeans()$centers[[input$step]][, input$ycol],
+  pch = 4, cex = 4, lwd = 4)
 })
   
   output$centertable <- renderTable({
