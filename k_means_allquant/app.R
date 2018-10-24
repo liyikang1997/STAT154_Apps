@@ -42,7 +42,9 @@ server <- function(input, output) {
     plot(selectedData()[,c(input$xcol,input$ycol)],
          col = clusters()$cluster,
          pch = 20, cex = 3)
-    points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
+    points(clusters()$centers[, input$xcol],
+           clusters()$centers[, input$ycol],
+           pch = 4, cex = 4, lwd = 4)
   })
   
   output$centertable <- renderTable({
