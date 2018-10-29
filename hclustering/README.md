@@ -1,6 +1,6 @@
 # Hierarchical clustering
 
-This app is for hierarchical clustering.
+This app is for hierarchical clustering with dataset 'mtcars'.
 
 ## Running the app
 
