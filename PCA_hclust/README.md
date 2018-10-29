@@ -1,6 +1,6 @@
 # Visualize PCA with Clusters
 
-This app is for visualizing Principal Component Analysis with clusters by Hierarchical Clustering.
+This app is for visualizing principal component analysis with clusters by hierarchical clustering with dataset 'mtcars'.
 
 
 ## Running the app
