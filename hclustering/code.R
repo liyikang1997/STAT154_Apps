@@ -7,7 +7,11 @@
 "._a2r_envir"         <- NA
 "._a2r_group"         <- NA
 
-
+#===============================================================================
+ggcolors <- function(n, alfa) {
+  hues = seq(15, 375, length = n + 1)
+  hcl(h = hues, l = 65, c = 100, alpha = alfa)[1:n]
+}
 #===============================================================================
 "A2Rplot" <- function(x,...){
   UseMethod("A2Rplot")
@@ -21,7 +25,8 @@
   x ,             # an hclust object to draw
   k        = 2,   # the number of groups
   col.up   = "black",
-  col.down = rainbow(k),
+#  col.down = rainbow(k),
+  col.down = ggcolors(k),
   lty.up   = 2,
   lty.down = 1,
   lwd.up   = 1,
@@ -97,8 +102,12 @@
   
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ The tree (1)
   par(mar=c(0,0,3,4))
-  if(is.null(members)) plot(0,type="n",xlim=c(0.5,n.indiv+.5), ylim=c(bottom,x$height[nn]), xaxs="i", axes=FALSE, xlab="",ylab="") 
-  else plot(0,type="n",xlim=c(0.5,sum(members)+.5), ylim=c(bottom,x$height[nn]), xaxs="i", axes=FALSE, xlab="",ylab="") 
+  if(is.null(members)) {
+    plot(0,type="n",xlim=c(0.5,n.indiv+.5), ylim=c(bottom,x$height[nn]), xaxs="i", axes=FALSE, xlab="",ylab="")
+    axis(side = 2, las = 2)
+  } else {
+    plot(0,type="n",xlim=c(0.5,sum(members)+.5), ylim=c(bottom,x$height[nn]), xaxs="i", axes=FALSE, xlab="",ylab="")
+  }
   #call to the ** recursive function ** .rec.hclust
   .rec.hclust(nn, col=col.up, lty=lty.up, lwd=lwd.up)
   title(main)
