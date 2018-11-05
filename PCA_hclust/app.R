@@ -9,6 +9,7 @@
 
 library(shiny)
 library(ggplot2)
+library(FactoMineR)
 
 # Define UI for application
 ui <- fluidPage(
@@ -19,8 +20,8 @@ ui <- fluidPage(
    # Sidebar with a slider input for number of bins 
    sidebarLayout(
       sidebarPanel(
-        numericInput("nPC", "Number of PCs", min = 2, value =  2),
-        checkboxInput('standardize', label = 'standardize'),
+        numericInput("nPC", "Number of PCs", min = 2, value =  5),
+        checkboxInput('standardize', label = 'standardize', value = TRUE),
         numericInput("xpc", "PC on X-axis", min = 1, value = 1),
         numericInput("ypc", "PC on Y-axis", min = 1, value = 2),
         numericInput('clusters', 'Cluster count', min = 1, value = 3),
