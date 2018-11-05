@@ -24,7 +24,7 @@ ui <- fluidPage(
                        textInput('variable','Enter a vector (comma delimmited) indicating the variables used for MCA (categorical only)',
                                  "")),
       conditionalPanel(condition = "input.tabselected==2",
-                       numericInput("nPC", "Number of PCs", min = 2, value =  2)),
+                       numericInput("nPC", "Number of PCs", min = 2, value =  5)),
       conditionalPanel(condition = "input.tabselected==3",
                        numericInput("xpc3", "PC on X-axis", min = 1, value = 1),
                        numericInput("ypc3", "PC on Y-axis", min = 1, value = 2)),
