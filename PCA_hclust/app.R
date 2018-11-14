@@ -52,7 +52,6 @@ server <- function(input, output) {
     pca<- PCA(data_with_cluster()[, -ncol(data_with_cluster())], scale.unit = input$standardize, ncp = input$nPC)
     pc_all<- pca$ind$coord
     pc_df <- data.frame(PC1 = pc_all[ ,input$xpc], PC2 = pc_all[ ,input$ypc], Cluster = as.factor(data_with_cluster()$cluster))
-    pc_df
   })
   
   output$IndPlot <- renderPlot({
