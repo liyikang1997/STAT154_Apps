@@ -19,24 +19,42 @@ ui <- fluidPage(
   titlePanel("Shiny App for decision trees: regression tree/classification tree"),
   
   # Sidebar
-  sidebarLayout(
-    sidebarPanel(
-      selectInput('response', 'Response variable', colnames(solder), "Opening"),
-      radioButtons("type", "Tree type:", c("Classification" = "class", "Regression" = "anova"), selected = character(0)),
-      numericInput("minsplit", "Minimum number of splits", min = 1, value = 20),
-      numericInput("minbucket", "Minimum number of individuals in any terminal node", min = 1, value = round(20/3)),
-      sliderInput("cp", "Complexity parameter", min = 0, max = 1, value = 0.01),
-      numericInput("xval", "Number of cross-validations", min = 0, value = 10),
-      numericInput("maxdepth", "Maximum depth", min = 0, value = 30),
-      hr("Plot:"),
-      sliderInput("margin", "Margin of tree plot", min = 0, max = 1, step = 0.01, value = 0.01),
-      checkboxInput("all", "Label all nodes")),
+  fluidRow(
+    column(6,
+           selectInput('response', 'Response variable', colnames(solder), "Opening"),
+           radioButtons("type", "Tree type:", c("Classification" = "class", "Regression" = "anova"), selected = character(0)),
+           numericInput("minsplit", "Minimum number of obs in a node for a split", min = 1, value = 20),
+           numericInput("minbucket", "Minimum number of obs in any terminal node", min = 1, value = round(20/3))
+    ),
+    column(6,
+           sliderInput("cp", "Complexity parameter", min = 0, max = 1, value = 0.01),
+           numericInput("xval", "Number of cross-validations", min = 0, value = 10),
+           numericInput("maxdepth", "Maximum depth", min = 0, value = 30)
+    )),
+  
+  hr(),
+
+  fluidRow(
+    column(width = 12,
+           plotOutput("treeplot")
+    )),
+  
+  fluidRow(
+    column(6,
+         sliderInput("margin", "Margin of tree plot", min = 0, max = 1, step = 0.01, value = 0.05),
+         sliderInput("branch", "Branch of tree plot", min = 0, max = 1, step = 0.1, value = 1),
+         checkboxInput("use.n", "Displays the number of observations of each class"),
+         checkboxInput("all", "Label all nodes")
+         ),
     
-    mainPanel(
-      plotOutput("treeplot")
+    column(6,
+         checkboxInput("fancy", "Shows internal nodes as ellipses, terminal nodes as rectangles"),
+         sliderInput("fwidth", "Width of the ellipses and rectangles", min = 0, max = 10, step = 1, value = 5),
+         sliderInput("fheight", "Height of the ellipses and rectangles", min = 0, max = 10, step = 1, value = 1),
+         sliderInput("minbranch", "The minimum height between levels", min = 0, max = 50, step = 1, value = 10))
     )
-  )
 )
+
 
 
 server <- function(input, output){
@@ -56,8 +74,9 @@ server <- function(input, output){
   
   
   plottree<-  reactive({
-    plot(tree(), margin= input$margin)
-    text(tree(), all = input$all)
+    plot(tree(), margin= input$margin, branch = input$branch, minbranch = input$minbranch)
+    text(tree(), fancy = input$fancy, use.n = input$use.n, all = input$all,
+         fwidth = input$fwidth, fheight = input$fheight)
   })
   
   
