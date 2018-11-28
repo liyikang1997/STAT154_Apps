@@ -9,6 +9,7 @@
 
 library(shiny)
 library(rpart)
+library(rpart.plot)
 
 col <- colnames(solder)
 
