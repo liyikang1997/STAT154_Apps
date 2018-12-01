@@ -29,8 +29,7 @@ ui <- fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(
-      plotOutput("LdaPlot"),
-      verbatimTextOutput("boundary")
+      plotOutput("LdaPlot")
     )
   )
 )
@@ -67,22 +66,26 @@ server <- function(input, output) {
     n2<- input$size2
     n<- n1+n2
     W1<- (1/(n1-1))*t(x()[1:n1,])%*%x()[1:n1,]
-    W2<- (1/(n2-1))*t(x()[n1+1:n, ])%*%x()[n1+1:n, ]
+    W2<- (1/(n2-1))*t(x()[(n1+1):n,])%*%x()[(n1+1):n,]
     W<- (n1-1)*W1/(n-1) + (n2-1)*W2/(n-1) 
-    W_inv<- inv(W)
-  
-    f<- -0.5*(g1+g2)*W_inv*(g1-g2)+(g1-g2)*W_inv%*%x()
+    W_inv<- solve(W)
+    
+    vec<- t(g1-g2)%*%W_inv
+    a<- vec[1]
+    b<- vec[2]
+    c<- t(g1+g2)%*%W_inv%*%(g1-g2)
+    
+    #curve(0.5*c/b - a*x/b, min(x()[,1])-1, max(x()[,1])+1)
+    eq = function(x){0.5*c/b - a*x/b}
     })
   
   
   output$LdaPlot<- renderPlot({
     plot(x()[labels() == 1,], col = 'red', xlab="X-axis", ylab="Y-axix", xlim=c(min(x()[,1])-1, max(x()[,1])+1),  ylim=c(min(x()[,2])-1, max(x()[,2])+1))
     points(x()[labels() == 2,], col = 'blue')
+    par(new=TRUE)
+    plot(boundary(), type='l', ann=FALSE, axes=FALSE, col='green')
   })
-  
-  output$boundary<- renderPrint(
-    boundary()
-  )
   
 }
 # Run the application 
