@@ -39,6 +39,9 @@ ui <- fluidPage(
   hr(),
   
   fluidRow(
+    column(width = 2
+   ),
+  
     column(width = 8,
            plotOutput("LdaPlot")
     ))
