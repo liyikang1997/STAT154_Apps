@@ -11,13 +11,12 @@ library(shiny)
 library(mvtnorm)
 library(MASS)
 
-# Define UI for application that draws a histogram
+# Define UI for application
 ui <- fluidPage(
   
   # Application title
   titlePanel("Shiny App for Linear discriminant analysis with 2 classes"),
   
-  # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
       textInput("mean1",'Enter a vector (comma delimmited) indicating the Mean for class 1', value = '0,0'),
@@ -27,7 +26,6 @@ ui <- fluidPage(
       numericInput("size1", "Size of class 1", min = 1, value = 100),
       numericInput("size2", "Size of class 2", min = 1, value = 100)),
     
-    # Show a plot of the generated distribution
     mainPanel(
       plotOutput("LdaPlot")
     )
@@ -75,7 +73,6 @@ server <- function(input, output) {
     b<- vec[2]
     c<- t(g1+g2)%*%W_inv%*%(g1-g2)
     
-    #curve(0.5*c/b - a*x/b, min(x()[,1])-1, max(x()[,1])+1)
     eq = function(x){0.5*c/b - a*x/b}
     })
   
