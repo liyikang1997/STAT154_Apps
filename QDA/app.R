@@ -11,7 +11,7 @@ library(shiny)
 library(mvtnorm)
 library(MASS)
 
-# Define UI for application that draws a histogram
+# Define UI for application
 ui <- fluidPage(
   
   # Application title
@@ -76,8 +76,6 @@ server <- function(input, output) {
     # draw decision boundary
     x <- seq(min(x()[,1])-1,max(x()[,1])+1,0.02)
     y <- seq(min(x()[,2])-1,max(x()[,2])+1,0.02)
-    #x <- seq(-6,6,0.02)
-    #y <- seq(-6,6,0.02)
     m <- length(x)
     n <- length(y)
     z <- as.matrix(expand.grid(x,y),0)
