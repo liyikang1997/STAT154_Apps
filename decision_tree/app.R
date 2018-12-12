@@ -19,7 +19,6 @@ ui <- fluidPage(
   # Application title
   titlePanel("Shiny App for decision trees: regression tree/classification tree"),
   
-  # Sidebar
   fluidRow(
     column(6,
            selectInput('response', 'Response variable', colnames(solder), "Opening"),
