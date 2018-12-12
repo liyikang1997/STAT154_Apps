@@ -11,7 +11,7 @@ library(shiny)
 library(mvtnorm)
 library(MASS)
 
-# Define UI for application that draws a histogram
+# Define UI for application
 ui <- fluidPage(
   
   # Application title
