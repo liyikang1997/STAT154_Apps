@@ -17,7 +17,6 @@ ui <- fluidPage(
    # Application title
    titlePanel("Shiny App for visualizing PCA with clusters"),
    
-   # Sidebar with a slider input for number of bins 
    sidebarLayout(
       sidebarPanel(
         numericInput("nPC", "Number of PCs", min = 2, value =  5),
@@ -28,13 +27,13 @@ ui <- fluidPage(
         selectInput('distance', 'Distance measure', c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski"), "euclidean"),
         selectInput('agglomerative', 'Agglomerative method', c("ward.D", "ward.D2", "single", "complete", "average", "mcquitty", "median", "centroid"), "complete")),
       
-      # Show a plot of the generated distribution
       mainPanel(
          plotOutput("IndPlot")
       )
    )
 )
-# Define server logic required to draw a histogram
+
+
 server <- function(input, output) {
   
   hc <- reactive({
